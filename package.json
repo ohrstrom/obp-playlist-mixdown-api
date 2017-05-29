@@ -45,7 +45,5 @@
     "vue": "vue/dist/vue.common"
   },
   "private": true,
-    "scripts": {
-      "postinstall": "gulp dist"
-    }
+    "scripts": {}
 }
