@@ -9,6 +9,7 @@
 *.egg-info
 data/
 env
+.env
 node_modules
 npm-debug.log
 app/env

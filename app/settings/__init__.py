@@ -20,7 +20,16 @@ _ = gettext
 # dev & test
 RUNNING_DEVSERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
 CHANNELS_ENABLED = not RUNNING_DEVSERVER
-from colorlog import ColoredFormatter
+
+include(
+    'components/base.py',
+    'components/template.py',
+    'components/storage.py',
+    scope=locals()
+)
+
+
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -99,10 +108,4 @@ LOGGING = {
         },
     }
 }
-
-include(
-    'components/base.py',
-    'components/template.py',
-    'components/storage.py',
-    scope=locals()
-)
+"""
