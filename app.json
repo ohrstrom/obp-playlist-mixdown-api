@@ -1,6 +1,6 @@
 {
     "name": "playlist-mixdown-api",
-    "description": "Playlist Mixdown Api",
+    "description": "Playlist Mixdown API",
     "keywords": [
         "python",
         "django"
