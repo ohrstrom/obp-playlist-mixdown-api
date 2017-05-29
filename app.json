@@ -1,0 +1,27 @@
+{
+    "name": "playlist-mixdown-api",
+    "description": "Playlist Mixdown Api",
+    "keywords": [
+        "python",
+        "django"
+    ],
+    "scripts": {
+        "dokku": {
+            "postdeploy": "python manage.py migrate --noinput"
+        }
+    },
+    "env": {
+        "SECRET_TOKEN": {
+            "description": "A secret key for verifying the integrity of signed cookies.",
+            "value": "secret"
+        }
+    },
+    "addons": [
+        "dokku-postgres"
+    ],
+    "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-python.git#v99"
+        }
+    ]
+}
