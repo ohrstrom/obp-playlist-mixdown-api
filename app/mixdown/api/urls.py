@@ -6,5 +6,5 @@ from . import views
 
 urlpatterns = [
     url(r'^playlist/$', views.playlist_list, name='playlist-list'),
-    url(r'^playlist/(?P<id>[0-9A-Fa-f-]+)/$', views.playlist_detail, name='playlist-detail'),
+    url(r'^playlist/(?P<uuid>[0-9A-Fa-f-]+)/$', views.playlist_detail, name='playlist-detail'),
 ]

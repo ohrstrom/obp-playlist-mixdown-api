@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from authtools.models import AbstractEmailUser
+from rest_framework.authtoken.models import Token
 
 @python_2_unicode_compatible
 class UserSettings(models.Model):
@@ -84,8 +85,7 @@ class User(AbstractEmailUser, UserSettings):
 
 
 
-
-
-# @receiver(post_save, sender=User)
-# def user_post_save(sender, instance, **kwargs):
-#     instance.profile.save()
+@receiver(post_save, sender=User)
+def user_post_save(sender, instance, created, **kwargs):
+    if created:
+        Token.objects.create(user=instance)

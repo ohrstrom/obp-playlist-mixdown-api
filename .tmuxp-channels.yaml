@@ -10,7 +10,7 @@ windows:
     - shell_command:
         - ./app/manage.py runworker
     - shell_command:
-        - daphne project.asgi:channel_layer --port 8080 --bind 0.0.0.0
+        - daphne app.asgi:channel_layer --port 8080 --bind 0.0.0.0
     - cd website
     - cd website
 

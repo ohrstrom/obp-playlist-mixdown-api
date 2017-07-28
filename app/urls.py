@@ -18,7 +18,7 @@ from django.views.generic import RedirectView
 last_modified_date = timezone.now()
 
 
-#admin.autodiscover()
+admin.autodiscover()
 #admin.site.site_header = 'api.example.com'
 
 urlpatterns = [
@@ -29,7 +29,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     #url(r'^admin_tools/', include('admin_tools.urls')),
-    #url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
     #url('^account/', include('auth_extra.urls')),
     #url('^account/', include('django.contrib.auth.urls')),
 

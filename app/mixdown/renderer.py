@@ -11,6 +11,8 @@ import sox
 
 from .remote import APIClient, API_BASE_URL
 
+FFMPEG_LOG_LEVEL = 'quiet'
+
 log = logging.getLogger(__name__)
 
 
@@ -253,8 +255,10 @@ class Renderer(object):
         concat_option = concat_option[:-1]
 
         command = [
-            'ffmpeg', '-i', concat_option, '-vn', '-ar', '44100', '-ac', '2', '-ab', '256k', '-f', 'mp3', '-y', out_path
+            'ffmpeg', '-i', concat_option, '-vn', '-loglevel', FFMPEG_LOG_LEVEL, '-ar', '44100', '-ac', '2', '-ab', '256k', '-f', 'mp3', '-y', out_path
         ]
+
+        log.debug('running: {}'.format(' '.join(command)))
 
         process = subprocess.Popen(command, stdout=subprocess.PIPE)
         process.wait()

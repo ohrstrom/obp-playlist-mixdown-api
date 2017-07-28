@@ -37,7 +37,7 @@ class RemoteURIReadable(object):
 class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='api:playlist-detail',
-        lookup_field='id'
+        lookup_field='uuid'
     )
 
     remote_uri = serializers.URLField(
@@ -48,28 +48,33 @@ class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
         ]
     )
 
-    remote_absolute_url = serializers.URLField(
+    mixdown_file = serializers.FileField(
         read_only=True
     )
 
-    mixdown_file = serializers.FileField(
+    duration = serializers.DurationField(
+        read_only=True
+    )
+
+    content_hash = serializers.CharField(
         read_only=True
     )
 
     status_display = serializers.SerializerMethodField()
 
     def get_status_display(self, obj):
-        return '{}'.format(obj.get_status_display())
+        return '{}'.format(obj.get_status_display()).lower()
 
     eta = serializers.SerializerMethodField()
 
     def get_eta(self, obj):
 
-        eta = 0
+        eta = obj.updated
 
         if obj.status < obj.STATUS_DONE:
 
-            eta =  (obj.updated + timedelta(seconds=obj.target_duration / 10)-timezone.now()).total_seconds()
+            #eta = (obj.updated + (obj.duration / 10) - timezone.now()).total_seconds()
+            eta = obj.updated + (obj.duration / 10)
 
         return eta
 
@@ -79,10 +84,11 @@ class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'url',
             'remote_uri',
-            'remote_absolute_url',
             'mixdown_file',
+            'duration',
             'uuid',
             'status',
             'status_display',
+            'content_hash',
             'eta',
         ]
