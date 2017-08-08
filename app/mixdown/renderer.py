@@ -67,6 +67,7 @@ def download_file(uri, path):
 # Playlist Renderer
 #######################################################################
 class Renderer(object):
+    id = None
     playlist_data = None
     output_path = None
     lock = None

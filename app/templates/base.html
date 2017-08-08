@@ -98,8 +98,7 @@
     <!-- start: passing settings to js -->
     <script>
         document.settings = {
-            fb_app_id: '{{ settings.FACEBOOK_APP_ID }}',
-            channels_enabled: {% if settings.CHANNELS_ENABLED %}true{% else %}false{% endif %}
+            fb_app_id: '{{ settings.FACEBOOK_APP_ID }}'
         }
     </script>
     <!-- end: passing settings to js -->
@@ -124,7 +123,6 @@
 
     <!-- start: compressed js -->
     {% compress js %}
-        {% if settings.TURBOLINKS_ENABLED and not request.toolbar.edit_mode %}<script src="{% static 'turbolinks/turbolinks.js' %}"></script>{% endif %}
         {% if debug %}
             <script src="{% static 'js/bundle.js' %}"></script>
         {% else %}
@@ -137,18 +135,6 @@
     {% render_block "js-ext" %}
 
     {% render_block "js" %}
-
-    {% if not settings.TURBOLINKS_ENABLED or request.toolbar.edit_mode %}
-        <script>
-            $(function(){
-                console.debug('turbolinks disabled');
-                /*
-                 * for compatibility we trigger a 'page:change' event if turbolinks is disabled
-                 */
-                $(document).trigger('page:change');
-            });
-        </script>
-    {% endif %}
 
     {% google_analytics %}
 

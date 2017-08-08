@@ -2,7 +2,6 @@
 # core python modules
 ##################################################################
 Django==1.11.1
-channels==0.17.3
 django_environ==0.4.3
 
 
@@ -16,13 +15,11 @@ hiredis==0.2.0
 django_redis
 django_storages==1.4.1
 boto==2.41.0
-gunicorn==19.6.0
-daphne==1.0.3
-asgi_redis==1.0.0
 sox==1.2.8
 
 #
 uwsgi
+django_cors_headers==2.1.0
 
 ##################################################################
 # django modules
@@ -33,7 +30,6 @@ django-celery-beat==1.0.1
 django-click==1.2.0
 django-compressor==2.0
 django-split-settings==0.2.3
-django-turbolinks==0.4
 
 ##################################################################
 # RESTful API

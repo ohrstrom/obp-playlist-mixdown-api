@@ -149,7 +149,6 @@ COMPRESS_OFFLINE_CONTEXT = {
 
 #STATIC_URL = 'https://d203ybydp8ddao.cloudfront.net/static/'
 
-# TURBOLINKS_ENABLED = False
 
 ##################################################################
 # social auth

@@ -1,5 +1,10 @@
 bundles
+.DS_Store
+*.pyc
+*.bak
+.idea
+.project
 .tox
 .git
-.git
 app/public
+app/data.sqlite3

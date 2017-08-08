@@ -48,5 +48,4 @@ def render_playlist_task(obj):
     url = '{}{}'.format(obj.remote_uri, 'mixdown-complete/')
     r = APIClient().post(url, data=[])
 
-    print('***************')
     print(r.status_code)

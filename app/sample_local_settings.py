@@ -7,8 +7,6 @@ INTERNAL_IPS = (
 DEBUG = True
 COMPRESS_ENABLED = False
 COMPRESS_OFFLINE = False
-TURBOLINKS_ENABLED = False
-
 
 ##################################################################
 # database

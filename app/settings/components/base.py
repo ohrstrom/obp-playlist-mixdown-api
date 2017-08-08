@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'corsheaders',
     # Disable Django's own staticfiles handling in favour of WhiteNoise, for
     # greater consistency between gunicorn and `./manage.py runserver`. See:
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
@@ -57,10 +58,8 @@ INSTALLED_APPS = [
     #'django.contrib.sitemaps',
     'django.contrib.humanize',
     #
-    'channels',
     'storages',
     'compressor',
-    'turbolinks',
     'raven.contrib.django.raven_compat',
     'django_celery_beat',
 
@@ -83,9 +82,9 @@ INSTALLED_APPS = [
 # middleware
 ##################################################################
 MIDDLEWARE_CLASSES = [
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'turbolinks.middleware.TurbolinksMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -123,18 +122,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ##################################################################
-# turbolinks
-# note: turbolinks does not work with gulp's browserSync
-##################################################################
-TURBOLINKS_ENABLED = True
-
-
-##################################################################
 # settings export
 ##################################################################
 SETTINGS_EXPORT = [
     'DEBUG',
-    'TURBOLINKS_ENABLED',
     'SITE_URL',
     'CHANNELS_ENABLED',
 ]
