@@ -180,27 +180,6 @@ class Renderer(object):
 
         return
 
-        # pool = Pool()
-        #
-        # procs = []
-        #
-        # for media in self.playlist_data['media']:
-        #
-        #     log.debug('queueing file for download: {}'.format(media['in_file_uri']))
-        #
-        #     url = media['in_file_uri']
-        #     path = media['in_file_path']
-        #
-        #     procs.append(pool.apply_async(download_file, args=(url, path)))
-        #
-        # #[p.get() for p in procs]
-        #
-        # pool.close()
-        # pool.join()
-        #
-        # log.info('completed downloading files')
-        #
-        # return
 
     ###################################################################
     # cue & fade parts
@@ -221,26 +200,6 @@ class Renderer(object):
 
         return
 
-        # pool = Pool()
-        #
-        # procs = []
-        #
-        # for media in self.playlist_data['media']:
-        #
-        #     if media['skip_processing']:
-        #         log.debug('no processing needed: {}'.format(media['in_file_path']))
-        #         shutil.copyfile(media['in_file_path'] , media['part_file_path'])
-        #     else:
-        #         procs.append(pool.apply_async(process_part, args=(media,)))
-        #
-        # #[p.get() for p in procs]
-        #
-        # pool.close()
-        # pool.join()
-        #
-        # log.info('completed processing parts')
-        #
-        # return
 
     ###################################################################
     # combine all parts to single file

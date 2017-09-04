@@ -15,6 +15,7 @@ from rest_framework.authtoken import views as auth_views
 def api_root(request, format=None):
     return Response({
         'mixdown': reverse('api:playlist-list', request=request, format=format),
+        'status': reverse('api:api-status', request=request, format=format),
         'auth-token': reverse('api:obtain-auth-token', request=request, format=format),
     })
 
@@ -23,6 +24,7 @@ def api_root(request, format=None):
 urlpatterns = [
     url(r'^$', api_root),
     url(r'^api-token-auth/', auth_views.obtain_auth_token, name='obtain-auth-token'),
+    url('^', include('api_extra.urls')),
     url('^mixdown/', include('mixdown.api.urls')),
 
 ]

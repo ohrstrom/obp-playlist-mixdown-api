@@ -1,9 +1,8 @@
 import requests
-
 from django.conf import settings
 
-
 API_BASE_URL = getattr(settings, 'REMOTE_API_BASE_URL')
+
 API_USER = getattr(settings, 'REMOTE_API_USER')
 API_KEY = getattr(settings, 'REMOTE_API_KEY')
 
