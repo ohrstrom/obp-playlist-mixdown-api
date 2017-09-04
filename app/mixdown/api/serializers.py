@@ -40,6 +40,8 @@ class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
         lookup_field='uuid'
     )
 
+    uuid = serializers.UUIDField()
+
     remote_uri = serializers.URLField(
         validators=[
             RemoteURIAccepted(),

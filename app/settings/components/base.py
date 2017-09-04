@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
-import posixpath
+import dj_database_url
 
-
-SECRET_KEY = env('SECRET_KEY')
+DEBUG = False
+SECRET_KEY = os.getenv('SECRET_KEY', '--change-me--')
 
 FILER_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*',]
@@ -12,11 +11,9 @@ ALLOWED_HOSTS = ['*',]
 # this fixes strange behaviour when running app through gunicorn
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
-SITE_URL = env('SITE_URL', default='http://localhost:8080/')
-SITE_ID = env.int('SITE_ID', default=1)
+SITE_ID = 1
 
-
-LOCALE_PATHS = [root('locale')]
+LOCALE_PATHS = [os.path.join(APP_ROOT, 'locale')]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -99,6 +96,35 @@ MIDDLEWARE_CLASSES = [
 ##################################################################
 # database
 ##################################################################
+DATABASES = {
+    'default': dj_database_url.config(default='sqlite:///app/data.sqlite3')
+}
+
+
+##################################################################
+# media, static & co
+##################################################################
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(APP_ROOT, 'media'))
+MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
+
+STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(APP_ROOT, 'static'))
+STATIC_URL = os.getenv('STATIC_URL', '/static/')
+
+ADMIN_MEDIA_PREFIX = os.path.join(APP_ROOT, 'static', 'admin')
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+STATICFILES_DIRS = [
+    os.getenv('STATIC_ROOT', os.path.join(APP_ROOT, 'site-static')),
+]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_OUTPUT_DIR = 'c'
+
 
 ##################################################################
 # authentication
@@ -126,9 +152,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ##################################################################
 SETTINGS_EXPORT = [
     'DEBUG',
-    'SITE_URL',
     'CHANNELS_ENABLED',
 ]
+
+
+##################################################################
+# celery / queue
+##################################################################
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+
 
 ##################################################################
 # API
@@ -147,10 +182,13 @@ REST_FRAMEWORK = {
 }
 
 ##################################################################
+# App
+##################################################################
+PUBLIC_APP_URL = os.getenv('PUBLIC_APP_URL', 'http://127.0.0.1:8000')
+
+##################################################################
 # Remote API (OBP)
 ##################################################################
-
-REMOTE_API_BASE_URL = env('REMOTE_API_BASE_URL', default='https://www.openbroadcast.org')
-REMOTE_API_USER = env('REMOTE_API_USER', default='peter')
-REMOTE_API_KEY = env('REMOTE_API_KEY', default='peter')
-
+REMOTE_API_BASE_URL = os.getenv('REMOTE_API_BASE_URL', None)
+REMOTE_API_USER = os.getenv('REMOTE_API_USER', None)
+REMOTE_API_KEY = os.getenv('REMOTE_API_KEY', None)

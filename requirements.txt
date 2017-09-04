@@ -19,7 +19,7 @@ sox==1.2.8
 
 #
 uwsgi
-django_cors_headers==2.1.0
+django-cors-headers==2.1.0
 
 ##################################################################
 # django modules

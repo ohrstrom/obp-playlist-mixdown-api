@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import environ
 from split_settings.tools import optional, include
 
-root = environ.Path(__file__) - 2
-env = environ.Env(DEBUG=(bool, False),)
-env.read_env('.env')
-SITE_ROOT = root()
-DEBUG = env('DEBUG')
+# reference to absolute paths for later use
+SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+APP_ROOT = os.path.join(SITE_ROOT, 'app')
 
 # add app path
-sys.path.insert(0, SITE_ROOT)
+sys.path.insert(0, APP_ROOT)
 
 #
 gettext = lambda s: s
@@ -19,93 +16,17 @@ _ = gettext
 
 # dev & test
 RUNNING_DEVSERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
-CHANNELS_ENABLED = not RUNNING_DEVSERVER
 
 include(
     'components/base.py',
     'components/template.py',
     'components/storage.py',
+
+    # optional local settings
+    optional(os.path.join(APP_ROOT, 'local_settings.py')),
+
+    # via server based settings in etc (placed by ansible deployment tasks)
+    optional('/etc/mixdown-api/application-settings.py'),
+    optional('/etc/mixdown-api/logging.py'),
     scope=locals()
 )
-
-
-"""
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s %(lineno)-4s [%(levelname)s] %(name)s: %(message)s'
-        },
-        'debug': {
-            'format': '[%(levelname)s] %(name)s: %(message)s'
-        },
-        'colored': {
-            '()': 'colorlog.ColoredFormatter',
-            'format': '%(log_color)s%(asctime)s %(lineno)-4s%(name)-24s %(levelname)-8s %(message)s',
-            'log_colors': {
-                'DEBUG': 'cyan',
-                'INFO': 'bold_green',
-                'WARNING': 'yellow',
-                'ERROR': 'red',
-                'CRITICAL': 'bold_red',
-            },
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'colored',
-        },
-    },
-    'loggers': {
-
-        'django.db.backends': {
-            'level': 'ERROR',
-            'handlers': ['console',],
-            'propagate': False
-        },
-        '': {
-            'handlers': ['console',],
-            'level': 'ERROR',
-            'propagate': False
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': False
-        },
-        'matching': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False
-        },
-        'notification': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-        'flatshare': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-        'celery': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-            'propagate': False
-        },
-        'dev': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-        'mixdown': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-    }
-}
-"""
